@@ -14,7 +14,8 @@ class ToDoList {
 public:
     ToDoList();
     void addTask(const std::string& description, int difficulty);
-    std::vector<Task> getTasks();
+    std::vector<Task> getTasks() const;
+    bool markTaskAsCompleted(int id);
 private:
     std::vector<Task> tasks;
     int nextId;

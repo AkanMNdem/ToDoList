@@ -9,4 +9,4 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 include_directories(include)
 
 # Add the executable and link the source files
-add_executable(to_do_list_cpp src/main.cpp src/TaskManager.cpp)
+add_executable(to_do_list_cpp src/main.cpp src/ToDoList.cpp)
