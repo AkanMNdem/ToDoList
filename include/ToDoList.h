@@ -1,5 +1,5 @@
-#ifndef TASKAMANGER_H
-#define TASKAMANGER_H
+#ifndef TODOLIST_H
+#define TODOLIST_H
 
 #include <string>
 
@@ -10,9 +10,9 @@ struct Task {
     int difficulty;
 };
 
-class TaskManager {
+class ToDoList { 
 public:
-    TaskManager();
+    ToDoList();
     void addTask(const std::string& description, int difficulty);
     std::vector<Task> getTasks();
 private:
