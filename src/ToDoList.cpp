@@ -55,12 +55,33 @@ void ToDoList::connect(const std::string& dbPath) {
 
 void ToDoList::addTask(const std::string& header, const std::string& description, int difficulty) {
     sqlite3_reset(addTaskStmt.get());
-    sqlite3_bind_text(addTaskStmt.get(), 1, description.c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_int(addTaskStmt.get(), 2, 0);
-    sqlite3_bind_int(addTaskStmt.get(), 3, difficulty);
+    sqlite3_bind_text(addTaskStmt.get(), 1, header.c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(addTaskStmt.get(), 2, description.c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_int(addTaskStmt.get(), 3, 0);
+    sqlite3_bind_int(addTaskStmt.get(), 4, difficulty);
     
     if (sqlite3_step(addTaskStmt.get()) != SQLITE_DONE) {
         throw std::runtime_error("Failed to insert task");
+    }
+}
+
+
+void ToDoList::deleteTask(int id) {
+    sqlite3_reset(deleteTaskStmt.get());
+    sqlite3_bind_int(deleteTaskStmt.get(), 1, id);
+    if (sqlite3_step(deleteTaskStmt.get()) != SQLITE_DONE) {
+        throw std::runtime_error("Failed to delete task");
+    }
+}
+void ToDoList::editTask(int id, const std::string& header, const std::string& description, int difficulty) {
+    sqlite3_reset(editTaskStmt.get());
+    sqlite3_bind_text(editTaskStmt.get(), 1, header.c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(editTaskStmt.get(), 2, description.c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_int(editTaskStmt.get(), 3, difficulty);
+    sqlite3_bind_int(editTaskStmt.get(), 4, id);
+
+    if (sqlite3_step(editTaskStmt.get()) != SQLITE_DONE) {
+        throw std::runtime_error("Failed to edit task");
     }
 }
 
@@ -71,9 +92,10 @@ std::vector<Task> ToDoList::getTasks() const {
     while (sqlite3_step(getTasksStmt.get()) == SQLITE_ROW) {
         Task task;
         task.id = sqlite3_column_int(getTasksStmt.get(), 0);
-        task.description = std::string(reinterpret_cast<const char*>(sqlite3_column_text(getTasksStmt.get(), 1)));
-        task.completed = sqlite3_column_int(getTasksStmt.get(), 2) != 0;
-        task.difficulty = sqlite3_column_int(getTasksStmt.get(), 3);
+        task.header = std::string(reinterpret_cast<const char*>(sqlite3_column_text(getTasksStmt.get(), 1)));
+        task.description = std::string(reinterpret_cast<const char*>(sqlite3_column_text(getTasksStmt.get(), 2)));
+        task.completed = sqlite3_column_int(getTasksStmt.get(), 3) != 0;
+        task.difficulty = sqlite3_column_int(getTasksStmt.get(), 4);
         tasks.push_back(task);
     }
     
@@ -82,11 +104,41 @@ std::vector<Task> ToDoList::getTasks() const {
 
 bool ToDoList::markTaskAsCompleted(int id) {
     sqlite3_reset(markCompletedStmt.get());
-    sqlite3_bind_int(markCompletedStmt.get(), 1, id);
+    sqlite3_bind_int(markCompletedStmt.get(), 1, 1);
+    sqlite3_bind_int(markCompletedStmt.get(), 2, id);
     
     if (sqlite3_step(markCompletedStmt.get()) != SQLITE_DONE) {
         throw std::runtime_error("Failed to mark task as completed");
     }
     
     return sqlite3_changes(db.get()) > 0;
+}
+
+bool ToDoList::unmarkTaskAsCompleted(int id) {
+    sqlite3_reset(unmarkCompletedStmt.get());
+    sqlite3_bind_int(unmarkCompletedStmt.get(), 1, 0);
+    sqlite3_bind_int(unmarkCompletedStmt.get(), 2, id);
+
+    if (sqlite3_step(unmarkCompletedStmt.get()) != SQLITE_DONE) {
+        throw std::runtime_error("Failed to unmark task as completed");
+    }
+
+    return sqlite3_changes(db.get()) > 0;
+}
+
+std::vector<Task> ToDoList::getCompletedTasks() const {
+    sqlite3_reset(getCompletedTasksStmt.get());
+    std::vector<Task> tasks;
+    
+    while (sqlite3_step(getCompletedTasksStmt.get()) == SQLITE_ROW) {
+        Task task;
+        task.id = sqlite3_column_int(getCompletedTasksStmt.get(), 0);
+        task.header = std::string(reinterpret_cast<const char*>(sqlite3_column_text(getCompletedTasksStmt.get(), 1)));
+        task.description = std::string(reinterpret_cast<const char*>(sqlite3_column_text(getCompletedTasksStmt.get(), 2)));
+        task.completed = sqlite3_column_int(getCompletedTasksStmt.get(), 3) != 0;
+        task.difficulty = sqlite3_column_int(getCompletedTasksStmt.get(), 4);
+        tasks.push_back(task);
+    }
+    
+    return tasks;
 }
