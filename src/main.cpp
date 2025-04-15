@@ -1,74 +1,66 @@
+#include "TaskPrioritizer.h"
 #include "ToDoList.h"
+#include <filesystem>
 #include <iostream>
-#include <string>
-
-void displayMenu() {
-    std::cout << "\nTo-Do List Application\n" << std::endl;
-    std::cout << "1. Add Task" << std::endl;
-    std::cout << "2. View Tasks" << std::endl;
-    std::cout << "3. Mark Task as Completed" << std::endl;
-    std::cout << "4. Exit" << std::endl;
-    std::cout << "Enter your choice: ";
-}
-
-void printTasks(const std::vector<Task>& tasks) {
-    for (const auto& task : tasks) {
-        std::cout << "ID: " << task.id 
-        << ", Description: " << task.description
-        << ", Difficulty: " << task.difficulty << std::endl
-        << ", Completed: " << (task.completed ? "Yes" : "No") << std::endl;
-    }
-}
 
 int main() {
+  try {
+    // Check if data directory exists, create if not
+    std::filesystem::path dataDir = "data";
+    if (!std::filesystem::exists(dataDir)) {
+      std::filesystem::create_directory(dataDir);
+    }
+
+    // Connect to database
     ToDoList todoList;
-    int choice;
-    do {
-        displayMenu();
-        std::cin >> choice;
+    todoList.connect("data/tasks.db");
+    std::cout << "Connected to database successfully.\n";
 
-        switch (choice) {
-            case 1: {
-                std::cin.ignore();
-                std::string description;
-                int difficulty;
+    // Basic task management demo
+    std::cout << "\n===== ToDo List Application =====\n";
 
-                std::cout << "Enter task description: ";
-                std::getline(std::cin, description);
-                std::cout << "Enter task difficulty (1-5): ";
-                std::cin >> difficulty;
+    // Add sample tasks if database is empty
+    auto tasks = todoList.getTasks();
+    if (tasks.empty()) {
+      std::cout << "Adding sample tasks...\n";
+      todoList.addTask("Complete C++ backend",
+                       "Implement ToDoList class functionality", 3,
+                       "2023-12-15");
+      todoList.addTask("Write tests",
+                       "Create unit tests for basic functionality", 2,
+                       "2023-12-20");
+      todoList.addTask("Integrate with frontend", "Connect backend to UI", 4,
+                       "2023-12-25");
+      todoList.addTask("Urgent task", "This needs to be done right away", 5,
+                       "2023-12-10");
+      todoList.addTask("Low priority", "Can be done whenever", 1, "2024-01-15");
+    }
 
-                todoList.addTask(description, difficulty);
-                std::cout << "Task added successfully!" << std::endl;
-                break;
-            }
-            case 2: {
-                std::vector<Task> tasks = todoList.getTasks();
-                if (tasks.empty()) {
-                    std::cout << "No Tasks available\n";
-                } else {
-                    printTasks(tasks);
-                }
-                break;
-            }
-            case 3: {
-                int id;
-                std::cout << "Enter task ID to mark as completed: ";
-                std::cin >> id;
-                if (todoList.markTaskAsCompleted(id)) {
-                    std::cout << "Task marked as completed.\n";
-                } else {
-                    std::cout << "Task not found.\n";
-                }
-                break;
-            }
-            case 4:
-                std::cout << "Exiting program.\n";
-                break;
-            default:
-                std::cout << "Invalid choice. Please try again.\n";
-        }
-    } while (choice != 4);
-    
+    // Display existing tasks in creation order
+    tasks = todoList.getTasks();
+    std::cout << "\nTasks (in creation order):\n";
+    for (const auto &task : tasks) {
+      std::cout << "[" << task.id << "] " << task.header
+                << " (Difficulty: " << task.difficulty
+                << ", Due: " << task.dueDate << ")\n"
+                << "    " << task.description << "\n";
+    }
+
+    // Display prioritized tasks
+    std::cout << "\nTasks (prioritized by balanced algorithm):\n";
+    auto prioritizedTasks = todoList.getPrioritizedTasks();
+    for (const auto &task : prioritizedTasks) {
+      std::cout << "[" << task.id << "] " << task.header
+                << " (Difficulty: " << task.difficulty
+                << ", Due: " << task.dueDate << ")\n"
+                << "    " << task.description << "\n";
+    }
+
+    std::cout << "\nApplication ran successfully.\n";
     return 0;
+
+  } catch (const std::exception &e) {
+    std::cerr << "Error: " << e.what() << std::endl;
+    return 1;
+  }
 }
