@@ -59,11 +59,28 @@ This document outlines the technology stack for the ToDoList Application. The ap
     - Efficient rendering through virtual DOM.
     - Supports functional components and hooks for state management.
 
+**Routing & Navigation:**
+- **React Router** (planned)
+  - **Why?**
+    - Industry standard for handling routing in React applications
+    - Enables multi-page experience with client-side routing
+    - Supports nested routes, route parameters, and navigation guards
+
 **Languages & Technologies:**  
 - **HTML, CSS, and JavaScript (ES6+)** (implemented)
   - **Why?**  
     - Standard technologies for building web interfaces.
     - Ensure broad browser compatibility and a responsive design.
+
+**UI Enhancement:**
+- **CSS Variables** (implemented)
+  - **Why?**
+    - Enables theming and consistent styling across components
+    - Simplifies theme switching functionality
+- **Responsive Design** (planned enhancement)
+  - **Why?**
+    - Ensures optimal user experience across different device sizes
+    - Improves accessibility and usability
 
 **Tooling:**  
 - **Bundler:** Create React App (implemented)
@@ -77,6 +94,13 @@ This document outlines the technology stack for the ToDoList Application. The ap
   - **Why?**
     - Promise-based HTTP client with easy-to-use API.
     - Automatic JSON transformation and error handling.
+
+**State Management:**
+- **React Context API** (implemented for theming)
+  - **Why?**
+    - Built-in solution for managing global state
+    - Avoids prop drilling in component hierarchies
+    - Suitable for medium-sized applications
 
 ---
 
