@@ -28,22 +28,30 @@ const TaskItem = ({ task, onTaskUpdated }) => {
     <div className="task-item" style={{ 
       padding: '15px', 
       margin: '10px 0', 
-      borderRadius: '4px',
-      border: '1px solid #ddd',
-      backgroundColor: task.completed ? '#f8f9fa' : 'white',
+      borderRadius: '8px',
+      border: '1px solid var(--border-color)',
+      backgroundColor: task.completed ? 'var(--completed-bg)' : 'var(--card-bg)',
+      boxShadow: 'var(--shadow)',
       display: 'flex',
       justifyContent: 'space-between',
-      alignItems: 'center'
+      alignItems: 'center',
+      transition: 'all 0.3s ease'
     }}>
       <div>
         <h3 style={{ 
           textDecoration: task.completed ? 'line-through' : 'none',
-          color: task.completed ? '#6c757d' : 'black'
+          color: task.completed ? 'var(--completed-text)' : 'var(--text-color)',
+          margin: '0 0 8px 0'
         }}>
           {task.header}
         </h3>
-        <p>{task.description}</p>
-        <div style={{ fontSize: '0.8rem', color: '#6c757d' }}>
+        <p style={{ 
+          color: 'var(--text-color)',
+          margin: '0 0 8px 0'
+        }}>
+          {task.description}
+        </p>
+        <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
           <span>Difficulty: {task.difficulty} | </span>
           {task.dueDate && <span>Due: {task.dueDate}</span>}
         </div>
@@ -52,13 +60,14 @@ const TaskItem = ({ task, onTaskUpdated }) => {
         <button 
           onClick={handleComplete}
           style={{
-            marginRight: '5px',
-            backgroundColor: task.completed ? '#6c757d' : '#28a745',
+            marginRight: '8px',
+            backgroundColor: task.completed ? 'var(--text-secondary)' : 'var(--success-color)',
             color: 'white',
             border: 'none',
-            padding: '6px 12px',
+            padding: '8px 16px',
             borderRadius: '4px',
-            cursor: 'pointer'
+            cursor: 'pointer',
+            transition: 'background-color 0.2s ease'
           }}
         >
           {task.completed ? 'Undo' : 'Complete'}
@@ -66,12 +75,13 @@ const TaskItem = ({ task, onTaskUpdated }) => {
         <button 
           onClick={handleDelete}
           style={{
-            backgroundColor: '#dc3545',
+            backgroundColor: 'var(--danger-color)',
             color: 'white',
             border: 'none',
-            padding: '6px 12px',
+            padding: '8px 16px',
             borderRadius: '4px',
-            cursor: 'pointer'
+            cursor: 'pointer',
+            transition: 'background-color 0.2s ease'
           }}
         >
           Delete

@@ -1,3 +1,39 @@
+/* Theme variables */
+:root {
+  /* Light theme (default) */
+  --bg-primary: #f9f9f9;
+  --bg-secondary: #ffffff;
+  --card-bg: #ffffff;
+  --text-color: #333333;
+  --text-secondary: #6c757d;
+  --border-color: #dddddd;
+  --primary-color: #4a90e2;
+  --success-color: #28a745;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --completed-bg: #f8f9fa;
+  --completed-text: #6c757d;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Dark theme */
+[data-theme='dark'] {
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --card-bg: #2d2d2d;
+  --text-color: #e0e0e0;
+  --text-secondary: #a0a0a0;
+  --border-color: #444444;
+  --primary-color: #5f9de6;
+  --success-color: #2eb85c;
+  --danger-color: #e55353;
+  --warning-color: #f9cc4f;
+  --completed-bg: #383838;
+  --completed-text: #a0a0a0;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Apply themes to body */
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -5,9 +41,53 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-primary);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+/* Basic button styling */
+button {
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: none;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+/* Global input styling */
+input, select, textarea {
+  background-color: var(--bg-secondary);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 14px;
+  transition: border-color 0.2s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+/* For accessibility */
+@media (prefers-reduced-motion) {
+  * {
+    transition: none !important;
+  }
 }
