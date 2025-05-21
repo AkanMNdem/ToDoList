@@ -1,70 +1,81 @@
-# Getting Started with Create React App
+# Todo List Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A React-based frontend for the Todo List application that communicates with a C++ Drogon backend API.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- View all tasks in a clean, organized interface
+- Add new tasks with titles, descriptions, difficulty levels, and due dates
+- Mark tasks as completed or uncompleted
+- Delete tasks
+- View tasks by different categories (All, Prioritized, Completed)
 
-### `npm start`
+## Technologies Used
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **React**: Frontend library for building the user interface
+- **Axios**: HTTP client for API communication
+- **Create React App**: Project scaffolding and build tooling
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Project Structure
 
-### `npm test`
+- **`src/components/`**: React components
+  - **`TaskForm.jsx`**: Form for creating new tasks
+  - **`TaskItem.jsx`**: Individual task display component
+  - **`TaskList.jsx`**: Component for displaying lists of tasks
+- **`src/services/`**: API communication
+  - **`taskService.js`**: Axios-based API client for the backend
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Getting Started
 
-### `npm run build`
+### Prerequisites
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Node.js and npm installed
+- Backend API server running (see main project README)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Installation
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-### `npm run eject`
+2. Start the development server:
+   ```bash
+   npm start
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+3. Build for production:
+   ```bash
+   npm run build
+   ```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Using the Application
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+1. **Adding Tasks**: Fill out the form at the top of the page and click "Add Task"
+2. **Viewing Tasks**: Tasks appear in the list below the form
+3. **Task Filtering**: Use the buttons above the task list to filter by All, Prioritized, or Completed
+4. **Managing Tasks**: Use the buttons on each task to mark as complete/incomplete or delete
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Connecting to the Backend
 
-## Learn More
+The frontend connects to the C++ backend API at `http://localhost:8080/api`. If your backend is running on a different URL, update the `API_URL` constant in `src/services/taskService.js`.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Customization
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Modify styles in component files or create dedicated CSS files
+- Add new components in the `src/components` directory
+- Extend API functionality in `src/services/taskService.js`
 
-### Code Splitting
+## Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+For production deployment:
+1. Build the frontend: `npm run build`
+2. Serve the static files in the `build` directory using Nginx, Apache, or a static hosting service
 
-### Analyzing the Bundle Size
+## Future Enhancements
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Task editing functionality
+- More detailed task views
+- User authentication
+- Additional filtering and sorting options
+- Dark mode toggle

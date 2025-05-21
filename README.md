@@ -1,96 +1,111 @@
 # ToDoList Application
 
 ## Overview
-`ToDoList` is a simple task management application implemented in C++. It provides users with the ability to add, view, edit, and delete tasks, demonstrating fundamental concepts of data management, file handling, and user interaction in C++.
+A modern task management application with a C++ backend and React frontend. It allows users to create, view, prioritize, edit, and delete tasks with an intelligent prioritization algorithm.
 
 ## Features
-- **Add Tasks**: Create new tasks with titles and descriptions.
-- **View Tasks**: Display all current tasks in an organized manner.
-- **Edit Tasks**: Modify existing tasks' details.
-- **Delete Tasks**: Remove tasks that are no longer needed.
-- **Persistent Storage**: Tasks are saved between sessions using file handling.
+- **Task Management**: Create, view, edit, and delete tasks
+- **Task Prioritization**: Intelligent algorithm orders tasks based on due dates and difficulty
+- **Completion Tracking**: Mark tasks as completed or uncompleted
+- **Multiple Views**: View all tasks, prioritized tasks, or completed tasks
+- **Persistent Storage**: SQLite database ensures tasks persist between sessions
 
 ## Technologies
-- **Programming Language**: C++
+### Backend
+- **Programming Language**: C++ (C++17)
+- **Web Framework**: Drogon - high-performance C++ web framework
+- **Database**: SQLite for efficient local data storage
 - **Build System**: CMake for cross-platform builds
-- **Containerization**: Docker support via `Dockerfile` and `docker-compose.yml`
-- **Data Handling**: File-based storage for task persistence
+
+### Frontend
+- **Framework**: React with functional components and hooks
+- **HTTP Client**: Axios for API communication
+- **Styling**: Inline CSS with React (expandable to CSS frameworks)
 
 ## Getting Started
 
 ### Prerequisites
-- **Environment**: Cross-platform (Windows, macOS, Linux)
-- **Compiler**: Any C++ compiler supporting C++11 or later
-- **Tools**: CMake, Docker (optional for containerized setup)
+- C++ compiler supporting C++17
+- CMake 3.15 or higher
+- Node.js and npm
+- SQLite3
 
-### Installation
-
+### Backend Setup
 1. Clone the repository:
    ```bash
-   git clone https://github.com/AkanMNdem/ToDoList.git
+   git clone https://github.com/yourusername/to-do-list-cpp.git
+   cd to-do-list-cpp
    ```
 
-2. Navigate to the project directory:
+2. Build the C++ backend:
    ```bash
-   cd ToDoList
+   ./build.sh
    ```
 
-3. Build the project using CMake:
+3. Run the API server:
    ```bash
-   mkdir build
-   cd build
-   cmake ..
-   cmake --build .
+   ./build/todo_api
    ```
+   The API server will start on http://localhost:8080
 
-### Using Docker (Optional)
-1. Build and run the application using Docker Compose:
+### Frontend Setup
+1. Navigate to the frontend directory:
    ```bash
-   docker-compose up --build
+   cd todo-list-frontend
    ```
 
-## Usage
-
-### Running the Application
-1. Start the ToDoList application:
+2. Install dependencies:
    ```bash
-   ./ToDoList
+   npm install
    ```
-2. Follow the on-screen prompts to add, view, edit, or delete tasks.
 
-## Code Structure
-- **`src/`**: Contains the main source code files.
-  - **`main.cpp`**: Entry point of the application.
-  - **`task_manager.cpp`**: Core logic for managing tasks.
+3. Start the development server:
+   ```bash
+   npm start
+   ```
+   The frontend will be available at http://localhost:3000
 
-- **`include/`**: Header files for function declarations.
-  - **`task_manager.h`**: Declares the task management functions and classes.
+## API Endpoints
 
-- **`data/`**: Directory used for storing task data persistently.
-- **`CMakeLists.txt`**: Build configuration file for CMake.
-- **`Dockerfile`**: Configuration for building a Docker container.
-- **`docker-compose.yml`**: Configuration for running the application using Docker Compose.
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | /api/tasks | List all tasks |
+| GET | /api/tasks/{id} | Get a specific task |
+| POST | /api/tasks | Create a new task |
+| PUT | /api/tasks/{id} | Update a task |
+| DELETE | /api/tasks/{id} | Delete a task |
+| POST | /api/tasks/{id}/complete | Mark a task as completed |
+| POST | /api/tasks/{id}/uncomplete | Mark a task as uncompleted |
+| GET | /api/tasks/completed | List completed tasks |
+| GET | /api/tasks/prioritized | List tasks in prioritized order |
+| GET | /api/prioritization/strategies | List available prioritization strategies |
 
-## Functionality
+## Project Structure
+- **`src/`**: Backend C++ source files
+  - **`main.cpp`**: Console application entry point
+  - **`api.cpp`**: API server implementation with Drogon
+  - **`ToDoList.cpp`**: Core task management logic
+  - **`TaskPrioritizer.cpp`**: Task prioritization algorithms
 
-### Task Management
-1. **Add Tasks**: Users can create new tasks by providing titles and descriptions.
-2. **View Tasks**: Lists all tasks with their details.
-3. **Edit Tasks**: Allows modification of task titles and descriptions.
-4. **Delete Tasks**: Removes tasks from the list and storage.
+- **`include/`**: Header files
+  - **`Task.h`**: Task data structure
+  - **`ToDoList.h`**: Task management interface
+  - **`TaskPrioritizer.h`**: Prioritization algorithm declarations
 
-### Persistent Storage
-- Tasks are saved in the `data/` directory, ensuring they persist between sessions.
+- **`todo-list-frontend/`**: React frontend application
+  - **`src/components/`**: React components
+  - **`src/services/`**: API services and utilities
+
+- **`data/`**: Contains the SQLite database
+- **`CMakeLists.txt`**: Build configuration file
+- **`build.sh`**: Build script for the C++ backend
 
 ## Future Enhancements
-- **User Authentication**: Add user accounts to manage personal task lists.
-- **Priority Levels**: Introduce task prioritization features.
-- **Graphical User Interface**: Develop a GUI using frameworks like Qt or GTK.
-- **Cloud Sync**: Enable task synchronization across devices via cloud storage.
+- Daily automatic task refresh at 9:00 AM
+- Enhanced prioritization algorithms based on research
+- User authentication and multiple user support
+- Mobile application
+- Dark mode and additional UI themes
 
 ## License
 This project is licensed under the MIT License.
-
-## Acknowledgments
-This project serves as a foundational exercise in C++ programming, emphasizing task management, file handling, and modular design principles.
-
