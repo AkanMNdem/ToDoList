@@ -9,6 +9,7 @@ A modern task management application with a C++ backend and React frontend. It a
 - **Completion Tracking**: Mark tasks as completed or uncompleted
 - **Multiple Views**: View all tasks, prioritized tasks, or completed tasks
 - **Persistent Storage**: SQLite database ensures tasks persist between sessions
+- **DevOps Ready**: Docker containerization, CI/CD pipeline, and automated testing
 
 ## Technologies
 ### Backend
@@ -22,6 +23,13 @@ A modern task management application with a C++ backend and React frontend. It a
 - **HTTP Client**: Axios for API communication
 - **Styling**: Inline CSS with React (expandable to CSS frameworks)
 
+### DevOps and Testing
+- **Containerization**: Docker with multi-stage builds
+- **Orchestration**: Docker Compose for service coordination
+- **CI/CD**: GitHub Actions for automated builds and tests
+- **Unit Testing**: Google Test for C++ unit tests
+- **API Testing**: Integration tests with curl/libcurl
+
 ## Getting Started
 
 ### Prerequisites
@@ -29,8 +37,11 @@ A modern task management application with a C++ backend and React frontend. It a
 - CMake 3.15 or higher
 - Node.js and npm
 - SQLite3
+- Docker and Docker Compose (optional for containerized setup)
 
-### Backend Setup
+### Method 1: Direct Setup
+
+#### Backend Setup
 1. Clone the repository:
    ```bash
    git clone https://github.com/yourusername/to-do-list-cpp.git
@@ -48,7 +59,7 @@ A modern task management application with a C++ backend and React frontend. It a
    ```
    The API server will start on http://localhost:8080
 
-### Frontend Setup
+#### Frontend Setup
 1. Navigate to the frontend directory:
    ```bash
    cd todo-list-frontend
@@ -65,6 +76,22 @@ A modern task management application with a C++ backend and React frontend. It a
    ```
    The frontend will be available at http://localhost:3000
 
+### Method 2: Docker Setup
+1. Clone the repository and navigate to the project directory:
+   ```bash
+   git clone https://github.com/yourusername/to-do-list-cpp.git
+   cd to-do-list-cpp
+   ```
+
+2. Build and start the containers:
+   ```bash
+   docker-compose up -d
+   ```
+
+3. Access the application:
+   - Backend API: http://localhost:8080
+   - Frontend: http://localhost:3000
+
 ## API Endpoints
 
 | Method | Endpoint | Description |
@@ -78,12 +105,13 @@ A modern task management application with a C++ backend and React frontend. It a
 | POST | /api/tasks/{id}/uncomplete | Mark a task as uncompleted |
 | GET | /api/tasks/completed | List completed tasks |
 | GET | /api/tasks/prioritized | List tasks in prioritized order |
-| GET | /api/prioritization/strategies | List available prioritization strategies |
+| GET | /health | Health check endpoint for monitoring |
 
 ## Project Structure
 - **`src/`**: Backend C++ source files
   - **`main.cpp`**: Console application entry point
   - **`api.cpp`**: API server implementation with Drogon
+  - **`api_docker.cpp`**: Simplified API server for Docker
   - **`ToDoList.cpp`**: Core task management logic
   - **`TaskPrioritizer.cpp`**: Task prioritization algorithms
 
@@ -92,20 +120,52 @@ A modern task management application with a C++ backend and React frontend. It a
   - **`ToDoList.h`**: Task management interface
   - **`TaskPrioritizer.h`**: Prioritization algorithm declarations
 
+- **`tests/`**: Testing directory
+  - **`core/`**: Unit tests for core functionality
+  - **`api/`**: API integration tests
+
 - **`todo-list-frontend/`**: React frontend application
   - **`src/components/`**: React components
   - **`src/services/`**: API services and utilities
 
+- **`.github/workflows/`**: CI/CD pipeline configuration
 - **`data/`**: Contains the SQLite database
 - **`CMakeLists.txt`**: Build configuration file
 - **`build.sh`**: Build script for the C++ backend
+- **`Dockerfile`**: Container definition for the backend
+- **`docker-compose.yml`**: Multi-container orchestration config
+
+## Testing
+Run tests using the following commands:
+
+```bash
+# Build with tests enabled
+mkdir -p build && cd build
+cmake ..
+make
+
+# Run all tests
+ctest --verbose
+
+# Or run the test target directly
+make run_tests
+```
+
+## Development Workflow
+1. Create a feature branch from `develop`
+2. Make your changes
+3. Run tests to verify functionality
+4. Create a pull request to merge back to `develop`
+5. CI pipeline will automatically build and test your changes
+6. After approval, changes are merged
 
 ## Future Enhancements
-- Daily automatic task refresh at 9:00 AM
-- Enhanced prioritization algorithms based on research
 - User authentication and multiple user support
+- Enhanced prioritization algorithms based on research
 - Mobile application
 - Dark mode and additional UI themes
+- Kubernetes deployment for production environments
+- Task categories and tagging system
 
 ## License
 This project is licensed under the MIT License.
