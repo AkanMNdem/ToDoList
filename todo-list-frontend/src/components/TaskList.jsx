@@ -14,8 +14,11 @@ const TaskList = ({ refreshTrigger }) => {
 
   const fetchTasks = async () => {
     setLoading(true);
+    setError('');
     try {
       let data;
+      console.log(`Fetching tasks for view: ${view}`);
+      
       switch (view) {
         case 'prioritized':
           data = await getPrioritizedTasks();
@@ -26,11 +29,20 @@ const TaskList = ({ refreshTrigger }) => {
         default:
           data = await getTasks();
       }
-      setTasks(data.tasks || []);
-      setError('');
+      
+      console.log('Tasks received:', data);
+      
+      if (!data || !data.tasks) {
+        console.error('Invalid data format:', data);
+        setError('Received invalid data format from server');
+        setTasks([]);
+      } else {
+        setTasks(data.tasks || []);
+        setError('');
+      }
     } catch (error) {
       console.error('Error fetching tasks:', error);
-      setError('Failed to load tasks. Please try again later.');
+      setError(`Failed to load tasks: ${error.message}`);
       setTasks([]);
     } finally {
       setLoading(false);

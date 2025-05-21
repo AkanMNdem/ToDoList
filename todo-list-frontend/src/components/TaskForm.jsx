@@ -10,6 +10,7 @@ const TaskForm = ({ onTaskAdded }) => {
   });
 
   const [error, setError] = useState('');
+  const [submitting, setSubmitting] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -32,8 +33,30 @@ const TaskForm = ({ onTaskAdded }) => {
       return;
     }
 
+    setSubmitting(true);
     try {
-      await createTask(task);
+      // Create a copy of the task to format the data properly
+      const formattedTask = {
+        ...task,
+        // Ensure description is never empty
+        description: task.description ? task.description : "No description provided"
+      };
+      
+      // Format the date to YYYY-MM-DD if it exists
+      if (formattedTask.dueDate) {
+        // If it's already in YYYY-MM-DD format, keep it
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(formattedTask.dueDate)) {
+          // If it's in MM/DD/YYYY format, convert it
+          const dateParts = formattedTask.dueDate.split('/');
+          if (dateParts.length === 3) {
+            const [month, day, year] = dateParts;
+            formattedTask.dueDate = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+          }
+        }
+      }
+      
+      console.log('Submitting task:', formattedTask);
+      await createTask(formattedTask);
       setTask({
         header: '',
         description: '',
@@ -44,7 +67,9 @@ const TaskForm = ({ onTaskAdded }) => {
       onTaskAdded();
     } catch (error) {
       console.error('Error creating task:', error);
-      setError('Failed to create task');
+      setError(`Failed to create task: ${error.message}`);
+    } finally {
+      setSubmitting(false);
     }
   };
 

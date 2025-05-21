@@ -39,7 +39,29 @@ A modern task management application with a C++ backend and React frontend. It a
 - SQLite3
 - Docker and Docker Compose (optional for containerized setup)
 
-### Method 1: Direct Setup
+### Method 1: Using Development Scripts
+
+We provide several scripts to simplify the development workflow:
+
+1. **Start local development environment**:
+   ```bash
+   ./dev.sh
+   ```
+   This script builds the project if needed, starts the backend API server, and launches the React development server.
+
+2. **Start Docker-based development environment**:
+   ```bash
+   ./docker-dev.sh
+   ```
+   This script builds and starts both the backend and frontend containers using Docker Compose.
+
+3. **Build frontend for production**:
+   ```bash
+   ./build-frontend.sh
+   ```
+   This script builds an optimized production version of the frontend.
+
+### Method 2: Direct Setup
 
 #### Backend Setup
 1. Clone the repository:
