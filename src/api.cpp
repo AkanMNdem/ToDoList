@@ -354,6 +354,15 @@ int main() {
     std::cout << "Starting API server on http://localhost:8080\n";
     app().setLogLevel(trantor::Logger::kWarn);
     app().addListener("0.0.0.0", 8080);
+    // Add CORS headers
+    app().registerHandler("/.*", [](const HttpRequestPtr& req, 
+                                std::function<void(const HttpResponsePtr&)>&& callback) {
+        auto resp = HttpResponse::newHttpResponse();
+        resp->addHeader("Access-Control-Allow-Origin", "*");
+        resp->addHeader("Access-Control-Allow-Methods", "OPTIONS, GET, POST, PUT, DELETE");
+        resp->addHeader("Access-Control-Allow-Headers", "Content-Type");
+        callback(resp);
+    }, {Options});
     app().run();
 
     return 0;
