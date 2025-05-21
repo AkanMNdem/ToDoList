@@ -18,8 +18,7 @@ This document outlines the technology stack for the ToDoList Application. The ap
     - Already part of the current project foundation.
 
 **Web Framework:**  
-- **Crow or Wt**
-- **Drogon** --> final choice due to Boost API dependency
+- **Drogon** (implemented)
   - **Why?**  
     - Modern C++ web framework with excellent performance.
     - Built-in JSON support and asynchronous request handling.
@@ -27,108 +26,92 @@ This document outlines the technology stack for the ToDoList Application. The ap
     - No dependency on deprecated Boost APIs.
 
 **Build System:**  
-- **CMake**
+- **CMake** (implemented)
   - **Why?**  
     - Enables cross-platform builds.
     - Manages project dependencies and simplifies compilation across different environments.
 
 **Database:**  
-- **SQLite**
+- **SQLite** (implemented)
   - **Why?**  
     - Simple, file-based relational database.
     - Ideal for MVP and scalable enough for small-to-medium workloads.
     - Low overhead and minimal configuration.
 
 **Logging:**  
-- **Built-in console logging**
+- **Built-in console logging** (implemented)
   - **Why?**  
     - Simplified approach for MVP.
     - Future enhancement: Integrate with spdlog or similar.
 
 **Testing Framework:**  
-- **Google Test or Catch2** (planned)
-  - **Why?**  
-    - Supports unit and integration testing.
-    - Ensures backend logic and API endpoints remain robust during development.
+- **Manual testing with curl** (implemented)
+  - Future plans to add automated tests with Google Test or Catch2
 
 ---
 
 ## Frontend
 
 **Framework:**  
-- **React, Vue.js, or Angular**
+- **React** (implemented)
   - **Why?**  
-    - These modern JavaScript frameworks allow you to build dynamic single-page applications (SPAs).
-    - Support component-based architecture, which improves maintainability and scalability.
+    - Popular component-based library with extensive ecosystem.
+    - Efficient rendering through virtual DOM.
+    - Supports functional components and hooks for state management.
 
 **Languages & Technologies:**  
-- **HTML, CSS, and JavaScript (ES6+)**
+- **HTML, CSS, and JavaScript (ES6+)** (implemented)
   - **Why?**  
     - Standard technologies for building web interfaces.
     - Ensure broad browser compatibility and a responsive design.
 
 **Tooling:**  
-- **Bundler:** Webpack or Create React App (if using React)
+- **Bundler:** Create React App (implemented)
   - **Why?**  
-    - Efficiently bundles and optimizes your assets for production.
-- **Package Manager:** npm or Yarn
+    - Quickly bootstraps a React application with good defaults.
+    - Handles webpack configuration and build process.
+- **Package Manager:** npm (implemented)
   - **Why?**  
     - Manages dependencies and simplifies script execution.
-- **UI Libraries (Optional):** Bootstrap, Material-UI, or Tailwind CSS
-  - **Why?**  
-    - Accelerates development of a consistent and responsive design.
+- **HTTP Client:** Axios (implemented)
+  - **Why?**
+    - Promise-based HTTP client with easy-to-use API.
+    - Automatic JSON transformation and error handling.
 
 ---
 
 ## Deployment & Management
 
 **Containerization:**  
-- **Docker**
+- **Docker** (planned)
   - **Why?**  
     - Provides isolated, reproducible environments.
-    - Simplifies the deployment process across different platforms (development, testing, production).
-
-**Orchestration:**  
-- **Docker Compose**
-  - **Why?**  
-    - Manages multi-container setups.
-    - Simplifies the communication between the backend, frontend, and other services like monitoring or logging.
+    - Simplifies the deployment process across different platforms.
 
 **CI/CD Pipeline:**  
-- **GitHub Actions, Travis CI, or Jenkins**
+- **GitHub Actions** (planned)
   - **Why?**  
     - Automates building, testing, and deployment processes.
-    - Ensures consistent and reliable application updates.
+    - Integrates well with GitHub repositories.
 
 **Management Scripts:**  
-- **Database Migration & Backup Scripts**
+- **build.sh for backend** (implemented)
   - **Why?**  
-    - Facilitate smooth schema updates and data integrity.
-- **Orchestration & Log Rotation Scripts**
-  - **Why?**  
-    - Help in maintaining, monitoring, and managing containers efficiently.
-
-**Monitoring & Logging:**  
-- **Monitoring Tools:** Prometheus, Grafana, or basic health-check endpoints
-  - **Why?**  
-    - Track application performance and uptime.
-- **Centralized Logging (Optional):** ELK Stack (Elasticsearch, Logstash, Kibana)
-  - **Why?**  
-    - Aggregates logs for better insights and troubleshooting in production.
+    - Simplifies building the C++ application.
+    - Future plans to extend for deployment scenarios.
 
 ---
 
-## Summary
+## Current Implementation Status
 
-This tech stack is designed to support a scalable, maintainable, and high-performance ToDoList Application:
+- **Backend:** 100% implemented (C++ with Drogon, SQLite)
+- **Frontend:** Basic implementation complete (React)
+- **Deployment:** Local development setup only
+- **API Integration:** Functional with proper error handling
 
-- **Backend:**  
-  C++ with a lightweight web framework for efficiency, coupled with SQLite for simple yet robust data storage.
+## Future Tech Considerations
 
-- **Frontend:**  
-  A modern SPA built with React/Vue.js/Angular ensures a rich user experience.
-
-- **Deployment:**  
-  Docker and Docker Compose streamline the deployment process, while CI/CD and management scripts help maintain and scale the application reliably.
-
-This comprehensive approach will not only meet the current MVP requirements but also provide a solid foundation for future enhancements and scalability.
+- Add proper CORS handling for production
+- Implement user authentication system
+- Add automated testing for both backend and frontend
+- Containerize the application with Docker
