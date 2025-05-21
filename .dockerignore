@@ -1,0 +1,19 @@
+# Build artifacts
+build/
+.cache/
+.clang/
+
+# Git
+.git/
+.github/
+
+# IDEs
+.vscode/
+.idea/
+
+# Frontend files (not needed for backend build)
+todo-list-frontend/
+
+# Other
+node_modules/
+.DS_Store 

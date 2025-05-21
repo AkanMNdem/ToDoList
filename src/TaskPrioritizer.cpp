@@ -3,6 +3,7 @@
 #include <ctime>
 #include <iomanip>
 #include <sstream>
+#include <limits>  // For std::numeric_limits
 
 TaskPrioritizer::TaskPrioritizer(Strategy strategy) : currentStrategy(strategy) {}
 

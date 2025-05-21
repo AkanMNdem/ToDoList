@@ -5,6 +5,7 @@
 #include <filesystem>
 #include <string>
 #include <vector>
+#include <ctime>  // For std::time
 
 // Using directives for Drogon types
 using drogon::app;
@@ -12,6 +13,7 @@ using drogon::Get;
 using drogon::Post;
 using drogon::Delete;
 using drogon::Put;
+using drogon::Options;  // Add Options method
 using drogon::HttpRequestPtr;
 using drogon::HttpResponsePtr;
 using drogon::HttpResponse;
@@ -47,6 +49,17 @@ int main() {
         std::cerr << "Database error: " << e.what() << std::endl;
         return 1;
     }
+
+    // Health check endpoint for monitoring
+    app().registerHandler("/health", 
+        [](const HttpRequestPtr &req, std::function<void(const HttpResponsePtr &)> &&callback) {
+            Json::Value result;
+            result["status"] = "ok";
+            result["timestamp"] = static_cast<Json::Int64>(std::time(nullptr));
+            auto resp = HttpResponse::newHttpJsonResponse(result);
+            callback(resp);
+        },
+        {Get});
 
     // GET all tasks
     app().registerHandler("/api/tasks", 

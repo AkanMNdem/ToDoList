@@ -19,3 +19,23 @@ Thumbs.db
 
 # Generated files
 *.log
+
+# Docker
+.docker/
+*.tar
+*.env
+
+# Test artifacts
+**/Testing/
+**/.coverage
+
+# Node.js dependencies
+node_modules/
+**/npm-debug.log*
+**/.pnpm-debug.log*
+**/yarn-debug.log*
+**/yarn-error.log*
+
+# Coverage reports
+**/coverage/
+**/.nyc_output/
