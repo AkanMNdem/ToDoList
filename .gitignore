@@ -1,0 +1,21 @@
+# Build artifacts
+build/
+.cache/
+.clang/
+compile_commands.json
+
+# Database files
+data/*.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*~
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# Generated files
+*.log

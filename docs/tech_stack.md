@@ -11,7 +11,7 @@ This document outlines the technology stack for the ToDoList Application. The ap
 ## Backend
 
 **Programming Language:**  
-- **C++ (C++11 or later)**
+- **C++ (C++17)**
   - **Why?**  
     - High performance and efficient memory management.
     - Fine-grained control over system resources.
@@ -19,9 +19,12 @@ This document outlines the technology stack for the ToDoList Application. The ap
 
 **Web Framework:**  
 - **Crow or Wt**
+- **Drogon** --> final choice due to Boost API dependency
   - **Why?**  
-    - Lightweight frameworks for building RESTful APIs and serving static assets.
-    - Simplifies integration of business logic with web services.
+    - Modern C++ web framework with excellent performance.
+    - Built-in JSON support and asynchronous request handling.
+    - Clear path parameter handling and middleware support.
+    - No dependency on deprecated Boost APIs.
 
 **Build System:**  
 - **CMake**
@@ -37,13 +40,13 @@ This document outlines the technology stack for the ToDoList Application. The ap
     - Low overhead and minimal configuration.
 
 **Logging:**  
-- **spdlog (or similar logging libraries)**
+- **Built-in console logging**
   - **Why?**  
-    - Provides fast, configurable logging for debugging and monitoring.
-    - Essential for production diagnostics.
+    - Simplified approach for MVP.
+    - Future enhancement: Integrate with spdlog or similar.
 
 **Testing Framework:**  
-- **Google Test or Catch2**
+- **Google Test or Catch2** (planned)
   - **Why?**  
     - Supports unit and integration testing.
     - Ensures backend logic and API endpoints remain robust during development.

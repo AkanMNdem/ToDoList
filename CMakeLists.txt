@@ -10,20 +10,9 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # Include header files
 include_directories(include)
 
-# Include FetchContent for downloading Crow
-include(FetchContent)
-
-# Fetch Crow
-FetchContent_Declare(
-    crow
-    GIT_REPOSITORY https://github.com/CrowCpp/Crow
-    GIT_TAG v1.0+5
-    CMAKE_ARGS -DCROW_FEATURES=""
-)
-FetchContent_MakeAvailable(crow)
-
-# Find SQLite3
-find_package(SQLite3 REQUIRED)
+# Find required packages
+find_package(Drogon REQUIRED)
+# find_package(SQLite3 REQUIRED)
 
 # Define source files for library
 set(LIB_SOURCES
@@ -41,4 +30,5 @@ target_link_libraries(to_do_list_cpp PRIVATE todo_lib)
 
 # API server
 add_executable(todo_api src/api.cpp)
-target_link_libraries(todo_api PRIVATE todo_lib Crow::Crow)
+target_link_libraries(todo_api PRIVATE todo_lib Drogon::Drogon)
+
